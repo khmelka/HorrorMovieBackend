@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 2019_07_30_005941) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: :cascade do |t|
     t.string "content"
-    t.integer "movie_id"
+    t.bigint "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["movie_id"], name: "index_comments_on_movie_id"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_005941) do
 
   create_table "likes", force: :cascade do |t|
     t.integer "number_of_likes"
-    t.integer "movie_id"
+    t.bigint "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["movie_id"], name: "index_likes_on_movie_id"
@@ -37,4 +40,6 @@ ActiveRecord::Schema.define(version: 2019_07_30_005941) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "movies"
+  add_foreign_key "likes", "movies"
 end
